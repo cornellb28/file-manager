@@ -22,12 +22,12 @@ const PlayerState = (props) => {
         audio: null,
     }
     const [state, dispatch] = useReducer(playerReducer, initialState)
-    
+
     // Set songs array
     const songsSet = (files) => {
         dispatch({ type: SET_SONGS_ARRAY, data: files })
     }
-        
+
     // Set playing state
     const togglePlaying = () =>
         dispatch({ type: TOGGLE_PLAYING, data: state.playing ? false : true })
