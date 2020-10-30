@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.dropzone {
+  border: 2px dashed #61dafb;
+  padding: 20px 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dropzone p {
+  margin: 0;
+}

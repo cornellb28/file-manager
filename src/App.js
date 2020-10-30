@@ -1,25 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Row, Col } from 'antd';
+import FileList from './components/FileList';
+import Dropzone from './components/Dropzone';
+import FileProvider from './contexts/FileContext';
+import Watchbox from './components/Watchbox';
+import AudioPlayer from './components/AudioPlayer';
+import TreeProvider from './contexts/TreeContext';
 import './App.css';
 
-function App() {
+
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <FileProvider>
+        <TreeProvider>
+          <>
+            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+              <Col className="gutter-row" span={4}>
+                <Watchbox />
+              </Col>
+              <Col className="gutter-row" span={20}>
+                <Row>
+                  <Col className="gutter-row" span={24}><Dropzone /></Col>
+                </Row>
+                <Row>
+                  <Col className="gutter-row" span={24}><FileList /></Col>
+                </Row>
+                {/* <Row>
+                  <Col className="gutter-row" span={24}><AudioPlayer /></Col>
+                </Row> */}
+              </Col>
+            </Row>
+          </>
+        </TreeProvider>
+      </FileProvider>
   );
 }
 
