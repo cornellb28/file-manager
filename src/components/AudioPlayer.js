@@ -17,7 +17,7 @@ const AudioPlayer = (props) => {
                     <Header />
                     {/* <Graphics /> */}
                 </div>
-                <Controls />
+                <Controls /> 
             </div>
         </PlayerState>
     )

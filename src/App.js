@@ -28,7 +28,7 @@ const App = () => {
                 </Row>
                 {/* <Row>
                   <Col className="gutter-row" span={24}><AudioPlayer /></Col>
-                </Row> */}
+                </Row> */} 
               </Col>
             </Row>
           </>

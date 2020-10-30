@@ -38,7 +38,7 @@ function Controls() {
   const handleProgress = (e) => {
     let compute = (e.target.value * dur) / 100;
     setCurrentTime(compute);
-    audio.current.currentTime = compute
+    audio.current.currentTime = compute 
   }
 
   useEffect(() => {
