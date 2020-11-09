@@ -12,4 +12,4 @@ const WatchBox = (props) => {
     )
 }
 
-export default WatchBox;
+export default WatchBox;   

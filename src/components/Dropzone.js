@@ -19,11 +19,11 @@ const Dropzone = (props) => {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'audio/*',
     onDrop: files => {
-      
+
       const filesData = _.map(files, ({ id = uuidv4(), name, path, size, type, tags = {} }) => {
         return { id, name, path, size, type, tags };
       });
-      
+
       ipcRenderer.send(FETCH_AUDIO_FILES, filesData);
       ipcRenderer.on(METADATA_COMPLETED, (event, filesWithData) => {
         addFiles(filesWithData);
