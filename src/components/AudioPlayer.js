@@ -2,13 +2,8 @@ import React, { useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 
 const AudioPlayer = (props) => {
-    const { id, path, type} = props
-    const initialState = {
-        songID: id
-    }
-    const [audio, setAudio] = useState(initialState)
 
-    console.log(audio)
+    const song = "/Users/cornellbenson/Music/Music/testFolder/Jay-Z ft Damian Marley  - Bam (Transition 100-78 - Clean).mp3"
     return (
         <>
             <div className="main">
@@ -16,9 +11,9 @@ const AudioPlayer = (props) => {
                     <span className="appName draggable">Currently Playing:</span>
                 </div>
             </div>
-            <ReactPlayer url={path} controls={true} />
+            <ReactPlayer url={song} controls={true} />
         </>
     )
 }
 
-export default AudioPlayer
+export default AudioPlayer     
