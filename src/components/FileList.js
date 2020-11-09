@@ -1,19 +1,40 @@
 import React, { useContext, useState } from 'react';
-import { FileContext } from "../contexts/FileContext";
 import ButtonFunc from './ButtonFunc';
 import { Button } from 'antd';
 import { SoundOutlined } from '@ant-design/icons';
 import { humanFileSize } from '../utils/sizeConverter';
 import { Table, Tooltip, Tag } from 'antd';
+import { FileContext } from '../contexts/FileContext';
+import AudioPlayer from './AudioPlayer';
+
 import _ from 'lodash';
 import 'antd/dist/antd.css';
-const { shell } = window.require('electron')
 
-
+// Component
 const FileList = (props) => {
-  const [files] = useContext(FileContext);
+  const [files, setFiles] = useContext(FileContext);
   const [selectionType, setSelectionType] = useState('checkbox');
-  const [selectedFile, setSelectedFile] = useState({})
+  const [selectedFiles, setSelectedFiles] = useState({ id: null, path: null })
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+  const folderFinder = (id) => {
+    const { shell } = window.require('electron')
+    shell.showItemInFolder(id);
+  }
+
+  const playButtonAction = (item) => {
+    const { key, location, type } = item
+    setSelectedFiles({ id: key, path: location, type })
+  }
 
   const tableData = _.map(files, (item) => {
     const { size, id, type, path, name, tags: { artist, genre } } = item
@@ -29,14 +50,6 @@ const FileList = (props) => {
     }
   });
 
-  const folderFinder = (id) => {
-    shell.showItemInFolder(id);
-  }
-
-  const playSong = (item) => {
-    const { location, key } = item
-    setSelectedFile({ path: location, id: key })
-  }
   const columns = [
     {
       title: '',
@@ -45,7 +58,7 @@ const FileList = (props) => {
       width: 80,
       render: (data, index) => {
         const i = index
-        return <Button onClick={() => playSong(i)}><SoundOutlined /></Button>
+        return <Button onClick={() => playButtonAction(i)}><SoundOutlined /></Button>
       }
     },
     {
@@ -140,19 +153,6 @@ const FileList = (props) => {
     }
   ];
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-
-      if (selectedRowKeys && selectedRowKeys.length >= 1) {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        return
-      } else {
-        return false
-      }
-    }
-  };
-
-
   return (
     <>
       <ButtonFunc />
@@ -165,6 +165,7 @@ const FileList = (props) => {
         dataSource={tableData}
         scroll={{ x: 1200, y: 1100 }}
       />
+      <AudioPlayer id={selectedFiles.id} path={selectedFiles.path} type={selectedFiles.type} />
     </>
   )
 }
