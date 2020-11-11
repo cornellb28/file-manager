@@ -6,15 +6,15 @@ const { CLICK_LIVE_FOLDER_BUTTON, SELECTED_FOLDER } = require('../utils/constant
 
 const BunttonFunc = (props) => {
 
-  const selectFolder = (path) => {
-    return FILEMOVE(path)
+  const selectedFolder = (path) => {
+    console.log(path)
   }
 
   const openDialogMove = () => {
     ipcRenderer.send(CLICK_LIVE_FOLDER_BUTTON);
     ipcRenderer.on(SELECTED_FOLDER, (event, filepaths) => {
       let parentpath = filepaths[0];
-      return selectFolder(parentpath)
+      selectedFolder(parentpath)
     });
   }
 

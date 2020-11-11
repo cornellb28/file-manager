@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, protocol } = require('electron')
 const fse = require('fs-extra')
 const path = require('path')
 const os = require('os')
@@ -48,7 +48,18 @@ function createWindow () {
 
   winState.manage(mainWindow);
   const {default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
 }
+
+app.on('ready', () => {
+  protocol.interceptFileProtocol('file', (request, callback) => {
+    const url = request.url.substr(7)    /* all urls start with 'file://' */
+    callback({ path: path.normalize(`${__dirname}/${url}`)})
+  }, (err) => {
+    if (err) console.error('Failed to register protocol')
+  })
+  createWindow()
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -109,6 +120,8 @@ ipcMain.on(CLICK_LIVE_FOLDER_BUTTON, (event) => {
   })
   }
 });
+
+
 
 
 

@@ -33,7 +33,7 @@ const FileList = (props) => {
 
   const playButtonAction = (item) => {
     const { key, location, type } = item
-    setSelectedFiles({ id: key, path: location, type })
+    setSelectedFiles({ id: key, filepath: location, type })
   }
 
   const tableData = _.map(files, (item) => {
@@ -165,7 +165,7 @@ const FileList = (props) => {
         dataSource={tableData}
         scroll={{ x: 1200, y: 1100 }}
       />
-      <AudioPlayer id={selectedFiles.id} path={selectedFiles.path} type={selectedFiles.type} />
+      <AudioPlayer id={selectedFiles.id} filepath={selectedFiles.filepath} type={selectedFiles.type} />
     </>
   )
 }

@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
+const url = window.require('url');
 
-const AudioPlayer = (props) => {
-
-    const song = "/Users/cornellbenson/Music/Music/testFolder/Jay-Z ft Damian Marley  - Bam (Transition 100-78 - Clean).mp3"
+console.log(url)
+const AudioPlayer = ({ filepath, id, type }) => {
+    const string = filepath
+    let u = string ? url.pathToFileURL(string) : ''
+    const song = u.href
     return (
         <>
             <div className="main">
                 <div className="windowCtr">
                     <span className="appName draggable">Currently Playing:</span>
                 </div>
+                <ReactPlayer url={song} controls={true} />
             </div>
-            <ReactPlayer url={song} controls={true} />
+
         </>
     )
 }
